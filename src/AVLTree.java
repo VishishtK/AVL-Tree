@@ -96,7 +96,18 @@ public class AVLTree {
     }
 
     private Node rightRotate(Node node) {
-        return node;
+        Node x = node;
+        Node y = node.leftChild;
+
+        // Rotate
+        x.leftChild = y.rightChild;
+        y.rightChild = x;
+
+        // Adjust Height
+        updateHeightOfNode(x);
+        updateHeightOfNode(y);
+
+        return y;
     }
 
 }
