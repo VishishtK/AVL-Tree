@@ -14,7 +14,6 @@ public class AVLTree {
 
     public void Insert(int key) {
         insert(root, new Node(key));
-
     }
 
     public void Delete(int key) {
@@ -52,17 +51,19 @@ public class AVLTree {
             return treeNode;
 
         if (heightOfTree(treeNode.leftChild) > heightOfTree(treeNode.rightChild)) {
+            // Left Left
             if (newNode.value < treeNode.leftChild.value) {
                 return rightRotate(treeNode);
-            } else {
+            } else { // Left Right
                 treeNode.leftChild = leftRotate(treeNode.leftChild);
                 return rightRotate(treeNode);
             }
         } else {
+            // Right Left
             if (newNode.value < treeNode.rightChild.value) {
                 treeNode.rightChild = rightRotate(treeNode.rightChild);
                 return leftRotate(treeNode);
-            } else {
+            } else { // Right Right
                 return leftRotate(treeNode);
             }
         }
