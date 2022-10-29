@@ -36,20 +36,36 @@ public class AVLTree {
             if (treeNode.leftChild == null)
                 treeNode.leftChild = newNode;
             else
-                insert(treeNode.leftChild, newNode);
+                treeNode.leftChild = insert(treeNode.leftChild, newNode);
         } else {
             if (treeNode.rightChild == null)
                 treeNode.rightChild = newNode;
             else
-                insert(treeNode.rightChild, newNode);
+                treeNode.rightChild = insert(treeNode.rightChild, newNode);
         }
 
         // Update height of the node
         treeNode.height = 1 + Math.max(heightOfTree(treeNode.leftChild), heightOfTree(treeNode.rightChild));
-        
+
         // Check balance of the tree and return if imbalanced
-        if(Math.abs(heightOfTree(treeNode.leftChild)-heightOfTree(treeNode.rightChild))>1) return treeNode;
-        return null;
+        if (Math.abs(heightOfTree(treeNode.leftChild) - heightOfTree(treeNode.rightChild)) < 2)
+            return treeNode;
+
+        if (heightOfTree(treeNode.leftChild) > heightOfTree(treeNode.rightChild)) {
+            if (newNode.value < treeNode.leftChild.value) {
+                return rightRotate(treeNode);
+            } else {
+                treeNode.leftChild = leftRotate(treeNode.leftChild);
+                return rightRotate(treeNode);
+            }
+        } else {
+            if (newNode.value < treeNode.rightChild.value) {
+                treeNode.rightChild = rightRotate(treeNode.rightChild);
+                return leftRotate(treeNode);
+            } else {
+                return leftRotate(treeNode);
+            }
+        }
     }
 
     private int heightOfTree(Node node) {
@@ -59,12 +75,12 @@ public class AVLTree {
             return node.height;
     }
 
-    private void leftRotate(Node node) {
-
+    private Node leftRotate(Node node) {
+        return node;
     }
 
-    private void rightRotate(Node node) {
-
+    private Node rightRotate(Node node) {
+        return node;
     }
 
 }
