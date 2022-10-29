@@ -45,21 +45,25 @@ public class AVLTree {
         }
 
         // Update height of the node
-        if (treeNode.leftChild == null && treeNode.rightChild == null)
-            treeNode.height = 1;
-        else if (treeNode.leftChild == null)
-            treeNode.height = 1 + treeNode.rightChild.height;
-        else if (treeNode.rightChild == null)
-            treeNode.height = 1 + treeNode.leftChild.height;
+        treeNode.height = 1 + Math.max(heightOfTree(treeNode.leftChild), heightOfTree(treeNode.rightChild));
+        
+        // Check balance of the tree and return if imbalanced
+        if(Math.abs(heightOfTree(treeNode.leftChild)-heightOfTree(treeNode.rightChild))>1) return treeNode;
+        return null;
+    }
+
+    private int heightOfTree(Node node) {
+        if (node == null)
+            return 0;
         else
-            treeNode.height = 1 + Math.max(treeNode.leftChild.height, treeNode.rightChild.height);
+            return node.height;
     }
 
-    private void leftRotate(Node node){
+    private void leftRotate(Node node) {
 
     }
 
-    private void rightRotate(Node node){
+    private void rightRotate(Node node) {
 
     }
 
