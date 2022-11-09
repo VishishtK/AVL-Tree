@@ -10,7 +10,7 @@ public class Node {
 
     public Node(int value) {
         this.value = value;
-        this.height = 0;
+        this.height = 1;
     }
 
     public Node(int value, Node left, Node right) {

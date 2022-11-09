@@ -5,7 +5,7 @@ public class AVLTree {
     Node root;
 
     public AVLTree() {
-        this.root = new Node();
+        this.root = null;
     }
 
     public AVLTree(int key) {
@@ -13,7 +13,11 @@ public class AVLTree {
     }
 
     public void Insert(int key) {
-        insert(root, new Node(key));
+        if (root == null) {
+            root = new Node(key);
+            return;
+        }
+        root = insert(root, new Node(key));
     }
 
     public void Delete(int key) {
@@ -50,7 +54,7 @@ public class AVLTree {
         if (Math.abs(heightOfNode(treeNode.leftChild) - heightOfNode(treeNode.rightChild)) < 2)
             return treeNode;
 
-        if (heightOfNode(treeNode.leftChild) > heightOfNode(treeNode.rightChild)) {
+        if (newNode.value < treeNode.value) {
             // Left Left
             if (newNode.value < treeNode.leftChild.value) {
                 return rightRotate(treeNode);
@@ -59,11 +63,11 @@ public class AVLTree {
                 return rightRotate(treeNode);
             }
         } else {
-            // Right Left
-            if (newNode.value < treeNode.rightChild.value) {
-                treeNode.rightChild = rightRotate(treeNode.rightChild);
+            // Right Right
+            if (newNode.value > treeNode.rightChild.value) {
                 return leftRotate(treeNode);
-            } else { // Right Right
+            } else { // Right Left
+                treeNode.rightChild = rightRotate(treeNode.rightChild);
                 return leftRotate(treeNode);
             }
         }
@@ -111,7 +115,15 @@ public class AVLTree {
     }
 
     public void PrintTree() {
-        
+        PreOrderPrint(root);
+    }
+
+    private void PreOrderPrint(Node node) {
+        if (node == null)
+            return;
+        System.out.println(node.value);
+        PreOrderPrint(node.leftChild);
+        PreOrderPrint(node.rightChild);
     }
 
 }

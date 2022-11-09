@@ -37,7 +37,7 @@ public class App {
                 ProcessInput(line);
                 line = reader.readLine();
             }
-            avlTree.PrintTree(avlTree.root, "", true);
+            avlTree.PrintTree();
             reader.close();
         } catch (IOException e) {
             e.printStackTrace();
