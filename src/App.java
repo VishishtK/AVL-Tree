@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 
 public class App {
 
@@ -20,10 +21,23 @@ public class App {
                 avlTree.Delete(Integer.parseInt(params[0]));
                 break;
             case "Search":
-                if (params.length == 2)
-                    avlTree.Search(Integer.parseInt(params[0]), Integer.parseInt(params[1]));
-                else
-                    avlTree.Search(Integer.parseInt(params[0]));
+                if (params.length == 2) {
+                    List<Node> nodes = avlTree.Search(Integer.parseInt(params[0]), Integer.parseInt(params[1]));
+                    if (nodes == null) {
+                        System.out.println("NULL");
+                    } else {
+                        for (Node node : nodes) {
+                            System.out.print(node.value + ", ");
+                        }
+                    }
+                } else {
+                    Node node = avlTree.Search(Integer.parseInt(params[0]));
+                    if (node == null) {
+                        System.out.println("NULL");
+                    } else {
+                        System.out.println(node.value);
+                    }
+                }
                 break;
         }
     }
@@ -37,7 +51,7 @@ public class App {
                 ProcessInput(line);
                 line = reader.readLine();
             }
-            avlTree.PrintTree();
+            // avlTree.PrintTree();
             reader.close();
         } catch (IOException e) {
             e.printStackTrace();

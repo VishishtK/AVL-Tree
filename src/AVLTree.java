@@ -25,14 +25,13 @@ public class AVLTree {
     }
 
     public Node Search(int key) {
-        return null;
+        return search(root, key);
     }
 
     public List<Node> Search(int key1, int key2) {
         return null;
     }
 
-    // Inserts the new Node and returns a node with an imbalance if any
     private Node insert(Node treeNode, Node newNode) {
         // Recursively go down the tree to the leaf and add the node
         if (newNode.value <= treeNode.value) {
@@ -92,14 +91,14 @@ public class AVLTree {
                     node = node.rightChild;
                 else
                     node = node.leftChild;
-            }else{
+            } else {
                 Node predecessor = inOrderPredecessor(node);
                 node.value = predecessor.value;
                 node.leftChild = delete(node.leftChild, predecessor.value);
             }
         }
 
-         // Update height of the node
+        // Update height of the node
         updateHeightOfNode(node);
 
         // Check balance of the tree and return if imbalanced
@@ -123,6 +122,27 @@ public class AVLTree {
                 return leftRotate(node);
             }
         }
+    }
+
+    private Node search(Node node, int key) {
+        if (node == null) {
+            return null;
+        }
+        // Travel to the node
+        if (node.value < key) {
+            // Search in right
+            return search(node.rightChild, key);
+        } else if (node.value > key) {
+            // Search in left
+            return search(node.leftChild, key);
+        } else {
+            // Key found
+            return node;
+        }
+    }
+
+    private Node search(Node node, int key1, int key2){
+        
     }
 
     private int heightOfNode(Node node) {
