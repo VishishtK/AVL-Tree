@@ -144,16 +144,16 @@ public class AVLTree {
         }
     }
 
-    private void search(List<Node> nodes, Node node, int key1, int key2){
-        if(node == null){
+    private void search(List<Node> nodes, Node node, int key1, int key2) {
+        if (node == null) {
             return;
         }
 
-        if(node.value<key1){
+        if (node.value < key1) {
             search(nodes, node.rightChild, key1, key2);
-        }else if(node.value>key2){
+        } else if (node.value > key2) {
             search(nodes, node.leftChild, key1, key2);
-        }else if(key1<=node.value && node.value <= key2){
+        } else if (key1 <= node.value && node.value <= key2) {
             search(nodes, node.leftChild, key1, key2);
             nodes.add(node);
             search(nodes, node.rightChild, key1, key2);
