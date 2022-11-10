@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class AVLTree {
@@ -29,7 +30,9 @@ public class AVLTree {
     }
 
     public List<Node> Search(int key1, int key2) {
-        return null;
+        ArrayList<Node> nodes = new ArrayList<>();
+        search(nodes, root, key1, key2);
+        return nodes;
     }
 
     private Node insert(Node treeNode, Node newNode) {
@@ -141,8 +144,20 @@ public class AVLTree {
         }
     }
 
-    private Node search(Node node, int key1, int key2){
-        
+    private void search(List<Node> nodes, Node node, int key1, int key2){
+        if(node == null){
+            return;
+        }
+
+        if(node.value<key1){
+            search(nodes, node.rightChild, key1, key2);
+        }else if(node.value>key2){
+            search(nodes, node.leftChild, key1, key2);
+        }else if(key1<=node.value && node.value <= key2){
+            search(nodes, node.leftChild, key1, key2);
+            nodes.add(node);
+            search(nodes, node.rightChild, key1, key2);
+        }
     }
 
     private int heightOfNode(Node node) {

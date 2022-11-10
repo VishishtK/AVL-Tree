@@ -26,9 +26,12 @@ public class App {
                     if (nodes == null) {
                         System.out.println("NULL");
                     } else {
+                        String output = "";
                         for (Node node : nodes) {
-                            System.out.print(node.value + ", ");
+                            output += node.value + ",";
                         }
+                        output = output.substring(0, output.length()-1);
+                        System.out.println(output);
                     }
                 } else {
                     Node node = avlTree.Search(Integer.parseInt(params[0]));
