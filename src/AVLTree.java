@@ -106,9 +106,9 @@ public class AVLTree {
         if (Math.abs(heightOfNode(node.leftChild) - heightOfNode(node.rightChild)) < 2)
             return node;
 
-        if (key < node.value) {
+        if (heightOfNode(node.leftChild) > heightOfNode(node.rightChild)) {
             // Left Left
-            if (key < node.leftChild.value) {
+            if (heightOfNode(node.leftChild.leftChild) > heightOfNode(node.leftChild.rightChild)) {
                 return rightRotate(node);
             } else { // Left Right
                 node.leftChild = leftRotate(node.leftChild);
@@ -116,7 +116,7 @@ public class AVLTree {
             }
         } else {
             // Right Right
-            if (key > node.rightChild.value) {
+            if (heightOfNode(node.rightChild.leftChild) < heightOfNode(node.rightChild.rightChild)) {
                 return leftRotate(node);
             } else { // Right Left
                 node.rightChild = rightRotate(node.rightChild);
