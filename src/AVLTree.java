@@ -21,7 +21,7 @@ public class AVLTree {
     }
 
     public void Delete(int key) {
-
+        root = delete(root, key);
     }
 
     public Node Search(int key) {
@@ -73,6 +73,58 @@ public class AVLTree {
         }
     }
 
+    private Node delete(Node node, int key) {
+        // If the key to be deleted is not found
+        if (node == null) {
+            return null;
+        }
+        // Travel to the node
+        if (node.value < key) {
+            node.rightChild = delete(node.rightChild, key);
+        } else if (node.value > key) {
+            node.leftChild = delete(node.leftChild, key);
+        } else { // If the key is same then delete this node
+
+            if (DegreeOfNode(node) == 0)
+                return null;
+            else if (DegreeOfNode(node) == 1) {
+                if (node.leftChild == null)
+                    node = node.rightChild;
+                else
+                    node = node.leftChild;
+            }else{
+                Node predecessor = inOrderPredecessor(node);
+                node.value = predecessor.value;
+                node.leftChild = delete(node.leftChild, predecessor.value);
+            }
+        }
+
+         // Update height of the node
+        updateHeightOfNode(node);
+
+        // Check balance of the tree and return if imbalanced
+        if (Math.abs(heightOfNode(node.leftChild) - heightOfNode(node.rightChild)) < 2)
+            return node;
+
+        if (key < node.value) {
+            // Left Left
+            if (key < node.leftChild.value) {
+                return rightRotate(node);
+            } else { // Left Right
+                node.leftChild = leftRotate(node.leftChild);
+                return rightRotate(node);
+            }
+        } else {
+            // Right Right
+            if (key > node.rightChild.value) {
+                return leftRotate(node);
+            } else { // Right Left
+                node.rightChild = rightRotate(node.rightChild);
+                return leftRotate(node);
+            }
+        }
+    }
+
     private int heightOfNode(Node node) {
         if (node == null)
             return 0;
@@ -112,6 +164,26 @@ public class AVLTree {
         updateHeightOfNode(y);
 
         return y;
+    }
+
+    private int DegreeOfNode(Node node) {
+        if (node.leftChild == null && node.rightChild == null)
+            return 0;
+        else if (node.leftChild == null || node.rightChild == null)
+            return 1;
+        else
+            return 2;
+
+    }
+
+    private Node inOrderPredecessor(Node node) {
+        if (node == null)
+            return node;
+        node = node.leftChild;
+        while (node.rightChild != null) {
+            node = node.rightChild;
+        }
+        return node;
     }
 
     public void PrintTree() {
